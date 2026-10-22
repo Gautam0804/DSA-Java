@@ -1,18 +1,24 @@
 class Solution {
     public int minGroups(int[][] intervals) {
-        Arrays.sort(intervals,(a,b)-> Integer.compare(a[0],b[0]));
-
-        PriorityQueue<Integer> min = new PriorityQueue<>();
-
-        for(int[] interval:intervals){
-            int start = interval[0];
-            int end = interval[1];
-
-            if(!min.isEmpty() && min.peek() < start){
-                min.poll();
-            }
-            min.offer(end);
+        int n = intervals.length;
+        int[] start = new int[n];
+        int[] end = new int[n];
+        for(int i=0;i<n;i++){
+            start[i] = intervals[i][0];
+            end[i] = intervals[i][1];
         }
-        return min.size();
+        Arrays.sort(start);
+        Arrays.sort(end);
+
+        int group = 0;
+        int j = 0;
+        for(int i=0;i<n;i++){
+            if(start[i]>end[j]){
+                j++;
+            }else{
+                group++;
+            }
+        }
+        return group;
     }
 }
