@@ -17,38 +17,24 @@
 import java.util.*;
 
 class Solution {
+    void dfs(TreeNode curr , int height , List<List<Integer>> Ans) {
+        if(curr == null) 
+            return;
+
+        if(height >= Ans.size()) 
+            Ans.add(new ArrayList<>());
+
+        Ans.get(height).add(curr.val);    
+
+        dfs(curr.left , height + 1 , Ans);
+        dfs(curr.right , height + 1 , Ans);
+    }
+
     public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<>();
+        List<List<Integer>> Ans = new ArrayList<>();
 
-        if (root == null) {
-            return result;
-        }
+        dfs(root , 0 , Ans);
 
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
-
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-
-            List<Integer> level = new ArrayList<>();
-
-            for (int i = 0; i < size; i++) {
-                TreeNode current = queue.poll();
-
-                level.add(current.val);
-
-                if (current.left != null) {
-                    queue.offer(current.left);
-                }
-
-                if (current.right != null) {
-                    queue.offer(current.right);
-                }
-            }
-
-            result.add(level);
-        }
-
-        return result;
+        return Ans;
     }
 }
