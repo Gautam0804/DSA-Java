@@ -1,22 +1,27 @@
+
 class Solution {
     public int numOfSubarrays(int[] arr) {
-        int MOD = 1000000007;
-        int[] count = new int[2];
-        int prefix = 0;
-        long answer = 0;
-        count[0] = 1;
+        int mod = 1_000_000_007;
+
+        long even = 1;
+        long odd = 0;
+        long prefixSum = 0;
+        long ans = 0;
 
         for (int num : arr) {
-            prefix += num;
-            int parity = prefix % 2;
-            if (parity == 0) {
-                answer += count[1];
+            prefixSum += num;
+
+            if (prefixSum % 2 == 0) {
+                ans += odd;
+                even++;
             } else {
-                answer += count[0];
+                ans += even;
+                odd++;
             }
-            count[parity]++;
-            answer %= MOD;
+
+            ans %= mod;
         }
-        return (int)answer;
+
+        return (int) ans;
     }
 }
